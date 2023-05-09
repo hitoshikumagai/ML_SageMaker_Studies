@@ -42,9 +42,8 @@ if __name__ == '__main__':
     parser.add_argument('--data-dir', type=str, default=os.environ['SM_CHANNEL_TRAIN'])
     
     # Define any additional model training hyperparameters using `parser.add_argument`
-    parser.add_argument('--kernel', type=str, default='linear')
-    parser.add_argument('--gamma', type=float, default=1)
-    parser.add_argument('--C', type=float, default=1)
+    parser.add_argument('-k','--kernel', type=str, default='linear')
+    parser.add_argument('-g','--gamma', type=float, default=1)
     
     # args holds all passed-in arguments
     args = parser.parse_args()
@@ -58,7 +57,7 @@ if __name__ == '__main__':
     train_x = train_data.iloc[:,1:].values
     
     # Define a model 
-    model = SVC(kernel=args.kernel, gamma=args.gamma, C=args.C)
+    model = SVC(kernel=args.kernel, gamma=args.gamma)
     #Train the model
     model.fit(train_x, train_y)
     
