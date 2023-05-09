@@ -42,9 +42,9 @@ if __name__ == '__main__':
     parser.add_argument('--data-dir', type=str, default=os.environ['SM_CHANNEL_TRAIN'])
     
     # Define any additional model training hyperparameters using `parser.add_argument`
-    parser.add_argument('--param-kernel', type=str, default='linear')
-    parser.add_argument('--param-C', type=float, default=0.25)
-    parser.add_argument('--param-gamma', type=float, default=2)
+    parser.add_argument('--param1-kernel', type=str, default='linear')
+    parser.add_argument('--param2-C', type=float, default=0.25)
+    parser.add_argument('--param3-gamma', type=float, default=2)
     
     # args holds all passed-in arguments
     args = parser.parse_args()
