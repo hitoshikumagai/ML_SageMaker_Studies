@@ -9,8 +9,8 @@ import pandas as pd
 # Import joblib package directly
 import joblib
 
-## TODO: Import any additional libraries you need to define a model
-
+# import LinearLearner
+from sklearn.svm import SVC
 
 # Provided model load function
 def model_fn(model_dir):
@@ -41,7 +41,10 @@ if __name__ == '__main__':
     parser.add_argument('--model-dir', type=str, default=os.environ['SM_MODEL_DIR'])
     parser.add_argument('--data-dir', type=str, default=os.environ['SM_CHANNEL_TRAIN'])
     
-    ## TODO: Add any additional arguments that you will need to pass into your model
+    # Define any additional model training hyperparameters using `parser.add_argument`
+    parser.add_argument('--param-kernel', type=str, default='linear')
+    parser.add_argument('--param-C', type=float, default=0.25)
+    parser.add_argument('--param-gamma', type=float, default=2)
     
     # args holds all passed-in arguments
     args = parser.parse_args()
@@ -51,23 +54,15 @@ if __name__ == '__main__':
     train_data = pd.read_csv(os.path.join(training_dir, "train.csv"), header=None, names=None)
 
     # Labels are in the first column
-    train_y = train_data.iloc[:,0]
-    train_x = train_data.iloc[:,1:]
+    train_y = train_data.iloc[:,0].values
+    train_x = train_data.iloc[:,1:].values
     
-    
-    ## --- Your code here --- ##
-    
-
-    ## TODO: Define a model 
-    model = None
-    
-    
-    ## TODO: Train the model
-    
-    
+    # Define a model 
+    model = SVC(kernel=args.kernel, C=args.C, gamma=args.gamma)
+    #Train the model
+    model.fit(train_x, train_y)
     
     ## --- End of your code  --- ##
-    
 
     # Save the trained model
     joblib.dump(model, os.path.join(args.model_dir, "model.joblib"))
