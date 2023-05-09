@@ -43,8 +43,8 @@ if __name__ == '__main__':
     
     # Define any additional model training hyperparameters using `parser.add_argument`
     parser.add_argument('--kernel', type=str, default='linear')
-    parser.add_argument('--gamma', type=float, default=0.25)
-    parser.add_argument('--C', type=float, default=0.25)
+    parser.add_argument('--gamma', type=float, default=1)
+    parser.add_argument('--C', type=float, default=1)
     
     # args holds all passed-in arguments
     args = parser.parse_args()
@@ -58,7 +58,7 @@ if __name__ == '__main__':
     train_x = train_data.iloc[:,1:].values
     
     # Define a model 
-    model = SVC(gamma=args.gamma,C=C,kernel=kernel)
+    model = SVC(kernel=args.kernel, gamma=args.gamma, C=args.C)
     #Train the model
     model.fit(train_x, train_y)
     
